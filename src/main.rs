@@ -4,7 +4,9 @@ use actix_web::{App, HttpResponse, HttpServer, Responder, get, web};
 
 const _VERSION_: &'static str = "v1.0.1";
 
-#[get("", "/", "/ip")]
+#[get("")]
+#[get("/")]
+#[get("/ip")]
 async fn ip() -> impl Responder {
     HttpResponse::Ok().json(&format!("Hello!"))
 }
