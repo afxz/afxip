@@ -4,6 +4,11 @@ use actix_web::{App, HttpResponse, HttpServer, Responder, get, web};
 
 const _VERSION_: &'static str = "v1.0.1";
 
+#[get("", "/", "/ip")]
+async fn ip() -> impl Responder {
+    HttpResponse::Ok().json(&format!("Hello!"))
+}
+
 #[get("/ip/info/{ip}")]
 async fn ip_info(ip: web::Path<String>) -> impl Responder {
     HttpResponse::Ok().json(&format!("Hello {ip}!"))
@@ -29,7 +34,7 @@ async fn main() -> std::io::Result<()> {
             .service(ip_info) //
             .service(ip6_info) //
     })
-    .bind(("0.0.0.0", 11089))?
-    .run()
-    .await
+        .bind(("0.0.0.0", 11089))?
+        .run()
+        .await
 }
