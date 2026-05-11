@@ -1,13 +1,14 @@
 mod geoip;
 
-use actix_web::{App, HttpRequest, HttpResponse, HttpServer, Responder, routes, get, web};
+use actix_web::{App, HttpRequest, HttpResponse, HttpServer, Responder, get, routes, web};
 use std::net::IpAddr;
 
 const _VERSION_: &'static str = "v1.0.1";
 
 #[get("/ip")]
 async fn ip(_req: HttpRequest) -> Result<HttpResponse, actix_web::Error> {
-    let _ip = _req.headers()
+    let _ip = _req
+        .headers()
         .get("x-forwarded-for")
         .and_then(|value| value.to_str().ok())
         .and_then(|xff| {
@@ -53,7 +54,7 @@ async fn main() -> std::io::Result<()> {
             .service(ip_info) //
             .service(ip6_info) //
     })
-        .bind(("0.0.0.0", 11089))?
-        .run()
-        .await
+    .bind(("0.0.0.0", 11089))?
+    .run()
+    .await
 }
